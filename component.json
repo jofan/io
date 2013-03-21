@@ -1,0 +1,20 @@
+{
+  "name": "jofan-io",
+  "repo": "jofan/jofan-io",
+  "description": "Personal playground for web development",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "jofan/foundation-grid": "*",
+    "jofan/foundation-block-grid": "*",
+    "jofan/foundation-visibility": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js"
+  ],
+  "styles": [
+    "jofan-io.css"
+  ]
+}

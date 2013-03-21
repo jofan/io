@@ -1,0 +1,17 @@
+{
+  "name": "ipad-rotation-lock",
+  "repo": "jofan/ipad-rotation-lock",
+  "description": "Article on how to use JS to best simulate iPad rotation lock",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {},
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js",
+    "template.js"
+  ],
+  "styles": [
+    "ipad-rotation-lock.css"
+  ]
+}
