@@ -1,0 +1,91 @@
+#!/usr/bin/env node
+
+var forever = require("forever");
+
+var name = "workflow-application",
+    sourceFile = "server.js",
+    DEV = "dev",
+    PRODUCTION = "production",
+    environments = [DEV, PRODUCTION];
+
+showUsage = function() {
+  console.log("Usage: launcher [option] [environment]");
+  console.log("");
+  console.log("Options:");
+  console.log("  start         Start server");
+  console.log("  stop          Stop server");
+  console.log("");
+  console.log("Environment:");
+  console.log("  dev           Development");
+  console.log("  production    Production");
+}
+
+getForeverOptions = function() {
+  if (environments.indexOf(environment) == -1) {
+    return null;
+  }
+  var uid = name + "-" + environment,
+      pidFile = uid + ".pid",
+      logFile = "logs/" + uid + ".log",
+      options = {
+        uid: uid
+      };
+  if (environment != DEV) {
+      options = {
+        uid: uid,
+        pidFile: pidFile,
+        logFile: logFile,
+        env: {
+          NODE_ENV: environment,
+          PORT: 3000
+        },
+        minUptime: 3000
+      }
+  }
+  if (environment == PRODUCTION) {
+    options.env.PORT = 80;
+  }
+  return options;
+}
+
+var environment = (process.argv[3] || DEV),
+    foreverOptions = getForeverOptions();
+
+if (foreverOptions) {
+  switch(process.argv[2]) {
+    case "start":
+      forever.list(false, function(err, foreverProcesses) {
+        if (err) {
+          throw err;
+        }
+        matchingForeverProcesses = forever.findByUid(foreverOptions.uid, foreverProcesses);
+        if (matchingForeverProcesses && matchingForeverProcesses.length > 0) {
+          console.log(environment + " server is already running.");
+        } else {
+          console.log("Starting " + environment + "...");
+          if (environment == DEV) {
+            forever.start(sourceFile, foreverOptions);
+          } else {
+            forever.startDaemon(sourceFile, foreverOptions);
+          }
+          console.log("Started.");
+        }
+      });
+      break;
+    case "stop":
+      console.log("Stopping " + environment + "...");
+      child = forever.stop(foreverOptions.uid, true);
+      child.on("stop", function(data) {
+        console.log("Stopped processes:");
+        console.log(data);
+      });
+      child.on("error", function(err) {
+        console.log(err);
+      });
+      break;
+    default:
+      showUsage();
+  }
+} else {
+  showUsage();
+}
