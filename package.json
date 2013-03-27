@@ -9,5 +9,7 @@
     "forever": "~0.10.0"
   },
   "devDependencies": {},
-  "scripts": {}
+  "scripts": {
+    "start": "node server.js"
+  }
 }

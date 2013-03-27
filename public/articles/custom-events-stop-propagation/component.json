@@ -1,0 +1,21 @@
+{
+  "name": "custom-events-stop-propagation",
+  "repo": "jofan/custom-events-stop-propagation",
+  "description": "Describing bug in WebKit browsers and providing demo",
+  "version": "0.0.1",
+  "keywords": [
+    "javascript",
+    "custom events",
+    "events",
+    "bug"
+  ],
+  "dependencies": {},
+  "development": {},
+  "license": "Copyright 2013 Stefan Liden",
+  "scripts": [
+    "index.js"
+  ],
+  "styles": [
+    "styles.css"
+  ]
+}
